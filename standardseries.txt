@@ -1,0 +1,10 @@
+The series may be a set of terms sharing a common quality with each other. You need to acquaint yourself with such standard pattterns to be able to solve them with ease.
+
+The series may be a set of prime numbers, or alternate prime numbers for that matter. The series may be consecutive terms of a fibonacci series or series of factorials of consecutive or alternate terms.
+
+A few examples:
+2, 3, 5, 7, 11, 13 - series of prime numbers
+5, 8, 13, 21, 34, 55 - consecutive terms of fibonacci series
+1, 6, 120, 5040, 45360, 498960 - factorials of alternate (odd) terms.
+
+The above example might look impossible to solve, but with a bit of practice, one can easily identify patterns in the problems and figure out the next terms.

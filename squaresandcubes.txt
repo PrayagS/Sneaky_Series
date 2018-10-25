@@ -1,0 +1,11 @@
+Squares and cubes are frequently introduced in series problems to increase the complexity of the problem. 
+
+The problem may be something as simple as this:
+1, 4, 9, 16, 25, 36 - squares of consecutive natural numbers
+1, 8, 27, 64, 125, 216 - cubes of consecutive natural numbers
+
+Any standard series may be squared or cubed to make it look complex: 
+8, 27, 125, 343, 1331, 2197 - cubes of consecutive prime numbers
+49, 144, 289, 484, 729, 1024 - square of an arithmetic progression - 7, 12, 17, 22, 27, 32
+
+The key to solving such problems is to check if the problem posed has all the terms which are perfect squares or cubes. We advise you to memorize squares and cubes of first 20 natural numbers. 

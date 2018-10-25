@@ -1,0 +1,13 @@
+Subsequent terms of a series may be dependent on the previous or consecutive previous terms. The dependency may be any arithmetic operation.
+
+In such series, we can derive an expression for any general term x(n) as a function of x(n-1) or x(n-2) or both.
+
+These type of problems are perhaps the toughest since the problem setter can literally create any pattern and make the problem appear mind boggling. Tremendous amount of practice is required to solve such problems.
+
+For example,
+9, 22, 61, 178, 529, 1582.
+	x(n) = 3x(n-1) - 5
+11, 37, 59, 133, 251, 517
+	x(n) = x(n-1) + 2x(n-2)
+
+

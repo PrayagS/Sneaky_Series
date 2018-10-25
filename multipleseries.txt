@@ -1,0 +1,5 @@
+It is very easy for an examiner to create mind boggling series problems, and there is virtually no way to bring them all in one bracket. The sequence logic may be literally anything, and nothing substitutes hardcore practice and an excellent ability to recognize patterns.
+
+You might encounter a series which is a combination of factorials and squares, or consecutive prime numbers multiplied by a constant or an arithmetic progression multiplied by their predecessors.
+
+Thank you for completing the e-learning tutorial. May the force be with you!

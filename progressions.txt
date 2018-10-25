@@ -1,0 +1,18 @@
+Progressions:
+
+There are three major types of progressions in mathematics.
+
+1. Arithmetic Progression
+Arithmetic progression is a type of series such that the difference between two consecutive terms is constant. 
+
+For example: 4, 9, 14, 25... is an arithmetic progression with common difference 5.
+
+2. Geometric Progression
+Geometric progression is a sequence of numbers where each term after the first is found by multiplying the previous one by a fixed, non-zero number called the common ratio.
+
+For example: 3, 6, 12, 24.... is a geometric progression with common ratio 2.
+
+3. Harmonic Progression
+Harmonic progression is a progression formed by taking the reciprocals of an arithmetic progression. It is a sequence of the form where -a/d is not a natural number and k is a natural number.
+
+For example: 1/2, 1/5, 1/8, 1/11... is a harmonic progression since 2, 5, 8 and 11 are in an arithmetic progression.
