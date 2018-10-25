@@ -18,6 +18,9 @@ void seriescracker();
 void userperformance();
 void addquiz();
 void sendmessage(int w, int x, int y, int z);
+//Quiz functions
+void getquestions();
+void getstatus();
 //E-learning functions
 void learnhome(int section);
 void Lprogressions();
@@ -46,9 +49,10 @@ float factorial(float x);
 struct question
 {
   float n[6];
-  int code;
-  int difficulty;
-};
+  char code[5];
+  int diff;
+  char status;
+}q[90], q0[30], q1[30], q2[30];
 
 int check=0;
 char username[30];
@@ -220,9 +224,19 @@ void signup(int count)
         fprintf(fpa, "\n%s,%s,u",username,password);
         fclose(fpa);
         printf("\n\nThanks for using Sneaky Series. Hope you have a good time!\n\n");
+        fp2=fopen("performance.csv", "a");
+        fprintf(fp2,"%s,",username);
+        for(int i=0; i<89; i++)
+        {
+        	fprintf(fp2,"n,");
+        }
+  
+        fprintf(fp2,"n\n");
+        fclose(fp2);
         sleep(2);
         menu();
     }
+
     ++count;
 }
 
@@ -313,13 +327,90 @@ void learn()
 void quiz()
 {
   int choice;
+  static check=0;
   system("cls");
+  getreference();
+  if(check==0)
+  {
+  	getquestions();
+  	check++;  	
+  }
+  getstatus();
   printf("How strong you think you are?\n\n");
   printf("1. Take it easy, I'm new\n2. I know a few things pretty well.\n3. Bring it on. I'm a series god!\n\n");
   printf("Enter your choice: ");
   // scanf("%d", &choice);
   choice=getche();
   //functions for quiz
+  if(choice==0)
+  {
+  	for(int i=0; i<30; i++)
+  	{
+  		
+  	}
+  }
+
+}
+void getquestions()
+{
+	FILE *fp, *fp2;
+	int i=0, j=0, k=0, l=0;
+	char str[300];
+	// char qcode[5];
+	// int diff;
+	// float a,b,c,d,e,f;
+	fp=fopen("quizdatabase.csv", "r");
+	while(feof(fp))
+	{
+		fscanf(fp, "%s, %d, %f, %f, %f, %f, %f, %f", q[i].code, q[i].diff, q[i].n[0], q[i].n[1], q[i].n[2], q[i].n[3], q[i].n[4], q[i].n[5]);
+		switch(q[i].diff)
+		{
+			case 0:
+				q0[j]=q[i];
+				j++;
+				break;
+			case 1:
+				q1[k]=q[i];
+				k++;
+				break;
+			case 2:
+				q2[l]=q[i];
+				l++;
+				break;
+		}
+	}
+	fclose(fp);
+}
+void getstatus()
+{
+	char *token;
+	FILE *fp;
+	fp=fopen("performance.csv", "r");
+	fscanf(fp, "%s", str);
+	token=strtok(str,",");
+	if(strcmp(token, username)==0)
+	{
+		for(int i=0; i<90; i++)
+		{
+			token=strtok(NULL, ",");
+			q[i].status=*token;
+		}
+	}
+	while(feof(fp2))
+	{
+		fscanf(fp2, "%s", str);
+		token=strtok(NULL,",");
+		if(strcmp(token, username)==0)
+		{
+			for(int i=0; i<90; i++)
+			{
+				token=strtok(NULL, ",");
+				q[i].status=*token;
+			}
+			break;
+		}		
+	}
+	fclose(fp);
 }
 void seriescracker()
 {
@@ -341,8 +432,6 @@ void seriescracker()
   if(check==0)
     prime(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
   if(check==0)
-    da_progression(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
-  if(check==0)
     fibonacci(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
   if(check==0)
     sumproduct(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
@@ -354,6 +443,8 @@ void seriescracker()
     squaresum_series(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
   if(check==0)
     productpretwo_series(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
+  if(check==0)
+    da_progression(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
   if(check==0)
     sumrelation(t[0],t[1],t[2],t[3],&t[4],&t[5],&code);
   if(check==0)
