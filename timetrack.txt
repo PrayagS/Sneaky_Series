@@ -1,0 +1,8 @@
+jarvis2,29.735001
+jarvis2,4.451000
+jarvis2,2.984000
+jarvis2,2.376000
+jarvis2,2.695000
+guest,7.178000
+guest,46.276001
+guest,53.623001

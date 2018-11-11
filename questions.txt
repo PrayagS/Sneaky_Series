@@ -1,0 +1,10 @@
+/*We've worked quite hard to make the series cracker capable of solving some really tough problems. We request you to test these problems out by entering them in the series cracker. You can also try entering your own problems */
+
+1,0,0,1
+1,-6,18,-36
+6,24,120,720
+-0.5,2,-8,32
+45,94,196,408
+73,79,83,89
+41,32,-50,-114
+101,105,114,128

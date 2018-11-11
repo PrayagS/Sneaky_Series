@@ -1,5 +1,3 @@
-Progressions:
-
 There are three major types of progressions in mathematics.
 
 1. Arithmetic Progression

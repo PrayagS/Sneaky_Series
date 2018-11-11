@@ -1,9 +1,9 @@
-Sometimes, it is also possible that the difference of a series is in arithmetic progression. It is also possible that the difference of differences or even their differences is in arithmetic progression. Same holds true for geometric or harmonic progression.
+﻿Sometimes, it is also possible that the difference of a series is in arithmetic progression. It is also possible that the difference of differences or even their differences is in arithmetic progression. Same holds true for geometric or harmonic progression.
 
 For example, in the series: 1, 2, 3, 6 17, 54, 171..... the third order differences are in geometric progression.
 
 Similarly, the series may involve two or more progressions running simultaneously, of same or different type.
 
-For example, the series 2, 4, 8, 8, 14, 12, 20 looks tricky at the first sight. But in reality, its fairly simple. Terms with odd index are in an arithmetic progression while the terms with even index are in geometric progression.
+For example, the series 2, 4, 8, 8, 14, 32, 20 looks tricky at the first sight. But in reality, its fairly simple. Terms with odd index are in an arithmetic progression while the terms with even index are in geometric progression.
 
 There's a special type of series known as Arithmetico-Geometric progression. An arithmetico–geometric sequence is the result of the term-by-term multiplication of a geometric progression with the corresponding terms of an arithmetic progression. For example, 1x2, 2x4, 3x8, 4x16......

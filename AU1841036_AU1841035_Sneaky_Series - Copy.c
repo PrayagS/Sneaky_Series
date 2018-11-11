@@ -1,8 +1,15 @@
+//Group Members :
+// Yashraj Kakkad - AU1841036
+// E-mail - kakkad.m@ahduni.edu.in
+// Prayag Savsani - AU1841035
+// E-mail - prayag.s@ahduni.edu.in
+
 //If using Dev-C++, please enable C99 features. Else, GCC works fine.
 
 //We have not yet finished coding the quiz performance report and admin functions for generating user performance
 //Rest of the program is fully functional - series cracker is the main highlight of the project.
-//The series cracker can crack most of the standard series asked in competitive exams using computations. It doesn't store any data
+//The series cracker can crack most of the standard series asked in competitive exams using computations. 
+//It doesn't store any data and is purely based on logic
 //To help you test the program better, we have given some sample questions in questions.txt file attached for you to enter in the program
 
 
@@ -30,9 +37,13 @@ void seriescracker();
 void userperformance();
 //void addquiz();
 void sendmessage(int w, int x, int y, int z); //You can send message to admin if series cracker doesn't crack your series
+void displaymessage();
 //Quiz functions
 void getquestions(); //Retains questions from quiz
 void getstatus(); //Ensures quiz questions never gets repeated (slightly pending)
+void updatestatus(char *usr, int qid, char stat);
+void recordscores(char *sfile, char *tfile, int score, int time); //Writes quiz scores in that user's file
+void usergraph(char *sfile, char *tfile);
 //E-learning functions
 void learnhome(int section);
 void Lprogressions();
@@ -61,7 +72,7 @@ void productpretwo_series(float w, float x, float y, float z, float* t1, float* 
 float factorial(float x);
 //Function to set the background and foreground colors randomly
 void setcolor();
-
+int qidtotopic(int qid);
 struct question //Quiz functions will store data in these structure arrays
 {
   float n[6];
@@ -71,6 +82,7 @@ struct question //Quiz functions will store data in these structure arrays
 }q[90], q0[25], q1[35], q2[30];
 
 int check=0;
+int choiceq;
 char username[30];
 
 int main()
@@ -173,18 +185,22 @@ void login(int count)
                     {
                         {
                         	gotoxy(50,15);
-                            printf("Welcome %s",username);
-                            Sleep(2000);
-                            token = strtok(NULL,",");
-                            if (*token == ch2)
-                            {
-                                menu();
-                            }
-                            else
-                            {
-                                adminmenu();
-                            }
-                            break;
+                          FILE *cuser;
+                          cuser=fopen("currentuser.txt", "w");
+                          fprintf(cuser,"%s",username);
+                          fclose(cuser);
+                          printf("Welcome %s",username);
+                          Sleep(2000);
+                          token = strtok(NULL,",");
+                          if (*token == ch2)
+                          {
+                              menu();
+                          }
+                          else
+                          {
+                              adminmenu();
+                          }
+                          break;
                         }
                     }
                     else
@@ -267,6 +283,9 @@ void signup(int count)
     	fprintf(fpa, "\n%s,%s,u",username,password);
         fclose(fpa);
         gotoxy(38,14);
+        FILE *cuser;
+        cuser=fopen("currentuser.txt", "w");
+        fprintf(cuser,"%d",username);
         printf("Thanks for using Sneaky Series. Hope you have a good time!");
         fp2=fopen("performance.csv", "a");
         fprintf(fp2,"%s,",username);
@@ -351,6 +370,9 @@ void adminmenu()
       break;
     case '4':
       break;
+    case '5':
+      displaymessage();
+      break; 
     default:
       printf("Invalid input. Please try again.");
       Sleep(1000);
@@ -462,7 +484,7 @@ void learn()
 }
 void quiz()
 {
-  char choiceq;
+  static int x=0;
   float a[2];
   int score=0;
   getstatus();
@@ -480,15 +502,14 @@ void quiz()
   printf("3. Bring it on. I'm a series god!");
   gotoxy(30,16);
   printf("Enter your choice: ");
-  // scanf("%d", &choice);
-  choiceq=getche();
+  scanf("%d", &choiceq);
   //Generate random number
   time_t t;
   srand((unsigned) time(&t));
 	int r[5];
 	clock_t t1; 
   t1 = clock();   
-	if(choiceq=='1')
+	if(choiceq==1)
 	{
 		system("cls");
 		for(int i=0; i<5; i++)
@@ -502,6 +523,7 @@ void quiz()
 				system("cls");
 				continue;
 			}
+      //updatestatus(username,r[i],);
 			gotoxy(10,11);
 			printf("%.2f",q0[r[i]].n[0]);
 			gotoxy(25,11);
@@ -517,7 +539,7 @@ void quiz()
 				gotoxy(55+15*(i+1),11);
 				scanf("%f", &a[i]);
 			}
-			Sleep(2000);
+			// Sleep(2000);
 			if(a[0]==q0[r[i]].n[4] && a[1]==q0[r[i]].n[5])
 			{
 				score++;
@@ -527,10 +549,11 @@ void quiz()
 			{
 				q0[r[i]].status = '0';
 			}
+      updatestatus(username,r[i],q0[r[i]].status);
 			system("cls");
 		}
 	}
-	else if(choiceq=='2')
+	else if(choiceq==2)
 	{
 		system("cls");
 		for(int i=0; i<5; i++)
@@ -544,14 +567,15 @@ void quiz()
 				system("cls");
 				continue;
 			}
+//      updatestatus(username,r[i]);
 			gotoxy(10,11);
-			printf("%.2f",q0[r[i]].n[0]);
+			printf("%.2f",q1[r[i]].n[0]);
 			gotoxy(25,11);
-			printf("%.2f",q0[r[i]].n[1]);
+			printf("%.2f",q1[r[i]].n[1]);
 			gotoxy(40,11);
-			printf("%.2f",q0[r[i]].n[2]);
+			printf("%.2f",q1[r[i]].n[2]);
 			gotoxy(55,11);
-			printf("%.2f",q0[r[i]].n[3]);
+			printf("%.2f",q1[r[i]].n[3]);
 			for(int i=0; i<2; i++)
 			{
 				gotoxy(55+15*(i+1),12);
@@ -559,7 +583,7 @@ void quiz()
 				gotoxy(55+15*(i+1),11);
 				scanf("%f", &a[i]);
 			}
-			Sleep(2000);
+			// Sleep(2000);
 			if(a[0]==q1[r[i]].n[4] && a[1]==q1[r[i]].n[5])
 			{
 				score++;
@@ -569,11 +593,12 @@ void quiz()
 			{
 				q1[r[i]].status = '0';
 			}
+      updatestatus(username,r[i],q1[r[i]].status);      
 			system("cls");
 		}
 	}
 
-	else if(choiceq=='3')
+	else if(choiceq==3)
 	{
 		system("cls");
 		for(int i=0; i<5; i++)
@@ -587,14 +612,15 @@ void quiz()
 				system("cls");
 				continue;
 			}
+  //    updatestatus(username,r[i]);
 			gotoxy(10,11);
-			printf("%.2f",q0[r[i]].n[0]);
+			printf("%.2f",q2[r[i]].n[0]);
 			gotoxy(25,11);
-			printf("%.2f",q0[r[i]].n[1]);
+			printf("%.2f",q2[r[i]].n[1]);
 			gotoxy(40,11);
-			printf("%.2f",q0[r[i]].n[2]);
+			printf("%.2f",q2[r[i]].n[2]);
 			gotoxy(55,11);
-			printf("%.2f",q0[r[i]].n[3]);
+			printf("%.2f",q2[r[i]].n[3]);
 			for(int i=0; i<2; i++)
 			{
         gotoxy(55+15*(i+1),12);
@@ -602,7 +628,7 @@ void quiz()
 				gotoxy(55+15*(i+1),11);
 				scanf("%f", &a[i]);
 			}
-			Sleep(2000);
+			// Sleep(2000);
 			if(a[0]==q2[r[i]].n[4] && a[1]==q2[r[i]].n[5])
 			{
 				score++;
@@ -612,6 +638,7 @@ void quiz()
 			{
 				q2[r[i]].status = '0';
 			}
+      updatestatus(username,r[i],q2[r[i]].status);      
 			system("cls");
 		}
 	}
@@ -623,7 +650,46 @@ void quiz()
 	t1 = clock() - t1;
 	double time_taken = ((double)t1)/CLOCKS_PER_SEC;  
 	printf("Your score is %d\n",score);
-	printf("fun() took %lf seconds to execute \n", time_taken);
+//  FILE *usercheck;
+ // usercheck=fopen()
+  FILE *userp;
+  char fsname[45], ftname[45], gsname[45], gtname[45];
+  if (x == 0)
+  {
+    strcpy(fsname,username);
+    strcat(fsname,"_score.dat");
+    strcpy(ftname,username);
+    strcat(ftname,"_time.dat");
+    strcpy(gsname,username);
+    strcat(gsname,"_score.png");
+    strcpy(gtname,username);
+    strcat(gtname,"_time.png");
+  }
+  recordscores(fsname,ftname,score,time_taken);
+  usergraph(fsname,ftname);
+  // switch(choiceq)
+  // {
+  //   case 1:
+  //     fprintf(userp,"easy ")
+  // }
+	printf("Time taken to complete the quiz is %lf seconds\n\n", time_taken);
+  system(gsname);
+  system(gtname);
+  Sleep(2000);
+  int choicex;
+  printf("1. Take another quiz\n2. Go back to main menu\n\n");
+  printf("Enter your choice : ");
+  scanf("%d",&choicex);
+  if (choicex == 1)
+  {
+    score=0;
+    ++x;
+    goto quiztop;
+  }
+  else
+  {
+    menu();
+  }
 }
 
 void getquestions()
@@ -1390,9 +1456,11 @@ void sendmessage(int w, int x, int y, int z)
       {
       	s[i-1] = s[i];
       }
-      fprintf(fp, "%s, %s, %d, %d, %d, %d\n",username, s, w, x, y, z); 
+      s[(strlen(s)-1)] = '\0';
+      fprintf(fp, "%s\n%s\n%d,%d,%d,%d\n\n",username, s, w, x, y, z);  
       fclose(fp);
-      printf("Thank you. Your message has been sent along with the problem you entered!\n"); 
+      printf("Thank you. Your message has been sent along with the problem you entered!\n");
+      Sleep(2000); 
       break;
     case 'N':
     case 'n':
@@ -1446,7 +1514,7 @@ void startupcolors()
     switch(color)
     {
       case 0:
-        system("color");
+        system("color 07");
         Sleep(100);
         break;
       case 1:
@@ -1520,6 +1588,9 @@ void setcolor()
   color=rand()%10;
   switch(color)
   {
+    case 0:
+      system("color 07");
+      break;
     case 1:
       system("color 0A");
       break;
@@ -1546,6 +1617,171 @@ void setcolor()
       break;
     case 9:
       system("color 9E");
-      break;
   }
+}
+void updatestatus(char *usr, int qid, char stat)
+{
+  FILE *upd;
+//  char status=stat+'0';
+  upd=fopen("performance.csv", "r+");
+  char *token, str[250];
+  while(fscanf(upd,"%s",str)!=EOF)
+  {
+    token=strtok(str,",");
+    if(!strcmp(token,usr))
+    {
+      // for(int i=0; i<=qid; i++)
+      // {
+      //   token=strtok(NULL,",");
+      // }
+//      printf("\n%s\n",token);
+        fseek(upd,-2*(89-qid),1);
+              fputc(stat,upd);
+      fseek(upd,0,1);
+      break;
+      // printf("%c",getc(upd));
+      // fseek(upd,-1,1);
+      // Sleep(2000);
+      // fseek(upd,-1,1);
+    }
+  }
+  fclose(upd);
+}
+void recordscores(char *sfile, char *tfile, int score, int time)
+{
+  FILE *rscore, *rtime;
+  int Tindex=0, lines=0;
+//  int Ttime,Tscore;
+  char *DIFF =(char*)calloc(11,sizeof(char));  //This is because string initialization can only be done during declaration
+  rscore=fopen(sfile,"r");
+//  rtime=fopen(tfile,"r");
+  char *token, *stemp;
+  int i=0;
+  char ch;
+  // while(!feof(rscore))
+  // {
+  //   fscanf(rscore,"%d,%s,%d,%d",Tindex,DIFF,Ttime,Tscore);
+  // }
+  while((ch=fgetc(rscore)) != EOF)
+  {
+    if (ch == '\n')
+    {
+      ++lines;
+    }
+  }
+  rewind(rscore);
+  // if (lines != 0)
+  // {
+  //   for (i=0; i < (3*(lines-1)+1); ++i)
+  //   {
+  //     fscanf(rscore,"%s",stemp);
+  //   }
+    Tindex = lines-1;
+  // }
+  int index=Tindex;
+  fclose(rscore);
+  rscore=fopen(sfile,"a");
+  rtime=fopen(tfile,"a");
+  switch(choiceq)
+  {
+    case 1:
+      DIFF="Easy";
+      break;
+    case 2:
+      DIFF="Medium";
+      break;
+    case 3:
+      DIFF="Difficult";
+  }
+  fprintf(rscore,"%d %s %d\n", (index+1),DIFF,score);
+  fprintf(rtime,"%d %s %d\n", (index+1),DIFF,time);
+  fclose(rscore);
+  fclose(rtime);
+  free(DIFF);
+  sleep(1);
+}
+void usergraph(char *sfile, char *tfile)
+{
+  FILE *scr;
+//  FILE *graph;
+  scr=fopen("script.gp", "w");
+  fprintf(scr,"set yrange [0:*]\nset term png\nset output \"%s_score.png\"\nset boxwidth 0.5\nset style fill solid\nplot \"%s\" using 1:3:xtic(2) with boxes",username,sfile);
+  fclose(scr);
+//  system("echo off");
+  system("gnuplot -p script.gp");
+//  Sleep(3000);
+  scr=fopen("script2.gp","w");
+  fprintf(scr,"set yrange [0:*]\nset term png\nset output \"%s_time.png\"\nset boxwidth 0.5\nset style fill solid\nplot \"%s\" using 1:3:xtic(2) with boxes",username,tfile);
+  fclose(scr);
+  system("gnuplot -p script2.gp");
+//  graph=fopen("graph.dat", "w");
+
+  // int nentries=0;
+  // char c;
+  // while((c=getc(ugraph))!=EOF)
+  // {
+  //   if(c='\n')
+  //     nentries++;
+  // }
+  // rewind(ugraph);
+  // char fdiff[11];
+  // int fscore;
+  // if (nentries<5)
+  // {
+  //   for(int i=1; i<nentries; i++)
+  //   {
+  //     fscanf(ugraph,"%s %d", fdiff, fscore);
+  //     fprintf(graph,"%d %s %d\n", i, fdiff, fscore);
+  //   }
+  // }
+  // else
+  // {
+
+  // }
+}
+
+void displaymessage()
+{
+  FILE *fp;
+  fp = fopen("messages.txt","r");
+  char s[1000], anykey;
+  int i=0;
+  readbegin:
+  while ((s[i]=fgetc(fp)) != EOF)
+  {
+    if (s[i] == '\n')
+    {
+      if (s[i-1] == '\n')
+      {
+        break;
+      }
+    }
+    printf("%c",s[i]);
+    ++i;
+  }
+  anykey = getche();
+  if (anykey == 10)
+  {
+    goto readbegin;
+  }
+  else
+  {
+    menu();
+  }
+}
+int qidtotopic(int qid)
+{
+  int t=qid/15;
+  if(t==0)
+    return 1;
+  else if(t==1)
+    return 2;
+  else if(t==2)
+    return 3;
+  else if(t==3)
+    return 4;
+  else if(t==4)
+    return 5;
+  else
+    return 6;
 }
